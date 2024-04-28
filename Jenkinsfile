@@ -77,7 +77,6 @@ pipeline {
                     gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default')
                     ] ) {
                     sh '''
-                    git checkout -b sc-staging
                     git add .  
                     git commit -m "Test1" 
                     git push origin sc-staging --force
