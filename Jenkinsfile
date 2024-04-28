@@ -76,9 +76,6 @@ stage('Update GIT') {
     script {
       catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         withCredentials([usernamePassword(credentialsId: 'mygitid', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-            def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-            sh "git config user.email kishanrampure59@gmail.com.com"
-            sh "git config user.name kishanrampure"
             sh "git add ."
             sh "git commit -m 'Triggered Build'"
             sh "git push https://github.com/Kishanrampure/DevOps-Petclinic-Project.git"
