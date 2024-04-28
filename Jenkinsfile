@@ -76,7 +76,6 @@ pipeline {
                     gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default')
                     ] ) {
                     sh '''
-		    git remote add kishanrampure https://github.com/Kishanrampure/DevOps-Petclinic-Project.git
                     git checkout -b sc-staging
                     git add .  
                     git commit -m "Test1" 
