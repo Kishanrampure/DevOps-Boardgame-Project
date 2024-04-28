@@ -77,6 +77,7 @@ pipeline {
                     ] ) {
                     sh '''
 		    git remote add kishanrampure https://github.com/Kishanrampure/DevOps-Petclinic-Project.git
+                    git checkout -b sc-staging
                     git add .  
                     git commit -m "Test1" 
                     git push origin sc-staging --force
