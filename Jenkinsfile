@@ -78,7 +78,7 @@ pipeline {
                     sh '''
                     git add .  
                     git commit -m "Test1" 
-                    git push origin sc-staging --force
+                    git push kishanrampure sc-staging --force
                     '''
                 }
             }
