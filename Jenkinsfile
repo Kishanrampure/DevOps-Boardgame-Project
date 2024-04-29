@@ -73,7 +73,7 @@ pipeline {
 
         stage('Git Push to sc-staging') {
 	  environment {
-                commitmsg = ""Test2""
+                commitmsg = "'Test2'"
             }
              steps {
 	       script{
@@ -81,10 +81,11 @@ pipeline {
                     gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default')
                     ] ) {
                     sh '''
+		    sh 'echo "Your code changes" > anotherfile.txt'
                     git add .
 		    git remote -v
                     git status
-		    git commit -m ${commitmsg}
+		    git commit -a -m ${commitmsg}
                     git push origin sc-staging --force
                     '''
                 } }
