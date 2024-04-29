@@ -19,24 +19,22 @@ pipeline {
             }
         }
         stage('Build') {
-            steps {
+        steps {
                 sh 'mvn clean compile'
             }
         }
-        	stage('Unit Test'){
-            steps {
+        stage('Unit Test'){
+        steps {
                 sh 'mvn test'
             }
         }
-
-	    stage('Integration Test'){
-            steps {
+	stage('Integration Test'){
+        steps {
                 sh 'mvn verify -DskipUnitTests'
             }
         }
-
         stage ('Code Analysis With CheckStyle'){
-            steps {
+        steps {
                 sh 'mvn checkstyle:checkstyle'
             }
             post {
@@ -46,22 +44,21 @@ pipeline {
             }
         }
         stage("OWASP Dependency Check"){
-            steps{
+        steps{
                 dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'OWSAP'
                 dependencyCheckPublisher pattern: '**/dependency-check-report.html'
             }
         }
         stage('Trivy FS Check') {
-            steps {
+        steps {
                 sh "trivy fs ."
             }
         }
-
         stage('SonarQube Analysis') {
             environment {
              SCANNER_HOME = tool 'sonar-scanner'
           }
-            steps{
+        steps{
                 withSonarQubeEnv('sonarserver') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Petclinic \
                     -Dsonar.java.binaries=. \
@@ -70,12 +67,11 @@ pipeline {
                 }
             }
         }
-
         stage('Git Push to sc-staging') {
 	  environment {
                 commitmsg = "'Test2'"
             }
-             steps {
+        steps {
 	       script{
                    withCredentials([
                     gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default')
@@ -88,7 +84,8 @@ pipeline {
                     git branch -M sc-staging
                     git push -u origin sc-staging --force
                     '''
-                } }
+                  } 
+	       }
             }
         }
     } 
