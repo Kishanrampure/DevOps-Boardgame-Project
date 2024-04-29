@@ -79,7 +79,9 @@ pipeline {
                     ] ) {
                     sh '''
                     git add .
-                    git commit -m "Test1"
+		    git remote -v
+                    git status
+		    ("(git commit -m 'Test2')")
                     git push origin sc-staging --force
                     '''
                 } }
