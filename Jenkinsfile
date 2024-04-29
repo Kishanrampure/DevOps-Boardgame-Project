@@ -77,7 +77,7 @@ stage('Update GIT') {
       catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default') {
             sh "git add ."
-            sh "git commit -m 'Triggered Build'"
+	    sh("(git commit -m 'Test2')")
             sh "git push https://github.com/Kishanrampure/DevOps-Petclinic-Project.git"
         }
       }
