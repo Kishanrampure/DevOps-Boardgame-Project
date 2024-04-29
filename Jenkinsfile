@@ -71,18 +71,19 @@ pipeline {
             }
         }
 
-stage('Update GIT') {
-  steps {
-      catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-        gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default') {
-	    sh 'echo "Your code changes" > anotherfile.txt'
-            sh "git add anotherfile.txt"
-            sh "git add ."
-	    sh("(git commit -m 'Test2')")
-            sh "git push https://github.com/Kishanrampure/DevOps-Petclinic-Project.git"
+        stage('Git Push to sc-staging') {
+             steps {
+	       script{
+                   withCredentials([
+                    gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default')
+                    ] ) {
+                    sh '''
+                    git add .
+                    git commit -m "Test1"
+                    git push origin sc-staging --force
+                    '''
+                } }
+            }
         }
-      }
-    }
-  }
-}
+    } 
 }
