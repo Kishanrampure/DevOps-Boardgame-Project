@@ -81,7 +81,6 @@ pipeline {
                     gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default')
                     ] ) {
                     sh '''
-		    echo "Your code changes!!" > anotherfile.txt
                     git add .
 		    git remote -v
                     git status
