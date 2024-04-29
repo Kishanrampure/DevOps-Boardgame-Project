@@ -73,7 +73,6 @@ pipeline {
 
 stage('Update GIT') {
   steps {
-    script {
       catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default') {
 	    sh "echo "Your code changes" > anotherfile.txt"
@@ -86,5 +85,4 @@ stage('Update GIT') {
     }
   }
 }
-    }
 }
