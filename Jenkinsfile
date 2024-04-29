@@ -72,6 +72,9 @@ pipeline {
         }
 
         stage('Git Push to sc-staging') {
+	  environment {
+                commitmsg = 'Test2'
+            }
              steps {
 	       script{
                    withCredentials([
@@ -81,7 +84,7 @@ pipeline {
                     git add .
 		    git remote -v
                     git status
-		    ("(git commit -m 'Test2')")
+		    git commit -m ${commitmsg}
                     git push origin sc-staging --force
                     '''
                 } }
