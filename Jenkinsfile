@@ -75,7 +75,7 @@ stage('Update GIT') {
   steps {
       catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default') {
-	    sh("(echo "Your code changes" > anotherfile.txt)")
+	    sh"(echo "Your code changes" > anotherfile.txt)"
             sh "git add anotherfile.txt"
             sh "git add ."
 	    sh("(git commit -m 'Test2')")
