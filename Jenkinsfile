@@ -81,13 +81,13 @@ pipeline {
                     gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default')
                     ] ) {
                     sh '''
-		    touch anotherfile.txt
-		    echo "Your code changes" > anotherfile.txt
+		    echo "Your code changes!!" > anotherfile.txt
                     git add .
 		    git remote -v
                     git status
 		    git commit -a -m ${commitmsg}
-                    git push origin sc-staging --force
+                    git branch -M sc-staging
+                    git push -u origin sc-staging --force
                     '''
                 } }
             }
