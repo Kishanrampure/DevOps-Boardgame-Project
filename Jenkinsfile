@@ -69,7 +69,7 @@ pipeline {
         }
         stage('Git Push to sc-staging') {
 	  environment {
-                commitmsg = "'Test2'"
+                commitmsg = "'CodeChange'"
             }
         steps {
 	       script{
