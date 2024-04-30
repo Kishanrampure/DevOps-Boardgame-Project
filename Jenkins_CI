@@ -15,7 +15,7 @@ pipeline {
         }
         stage('SCM Fetch') {
         steps{
-            git branch: 'main', url: 'https://github.com/Kishanrampure/DevOps-Petclinic-Project.git'
+            git branch: 'main', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
             }
         }
         stage('Build') {
@@ -60,9 +60,9 @@ pipeline {
           }
         steps{
                 withSonarQubeEnv('sonarserver') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Petclinic \
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Boardgame \
                     -Dsonar.java.binaries=. \
-                    -Dsonar.projectKey=Petclinic '''
+                    -Dsonar.projectKey=Boardgame '''
 
                 }
             }
