@@ -1,4 +1,9 @@
 
+# DevOps - Petclinic - Project
+Implementing a DevOps CI/CD pipeline for the Sample PetClinic Application in a production level environment.
+
+Understanding the Spring Petclinic application with a few diagrams
+
 ## Prerequisites
 - Install JKD 17
 - Install Jenkins
