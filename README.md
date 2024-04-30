@@ -3,6 +3,7 @@
 Implementing a DevOps CI/CD pipeline for the Sample PetClinic Application in a production level environment.
 
 Understanding the Spring Petclinic application with a few diagrams
+
 ![image](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/87ec1469-3a06-4023-addc-139165de83b0)
 
 ## Prerequisites
