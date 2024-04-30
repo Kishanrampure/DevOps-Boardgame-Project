@@ -248,6 +248,17 @@ exit
 | Maven installations | M3 | Install from Apache - 3.9.6 |
 | Dependency-Check installations | OWAPS | Install from github.com - 9.1.0 |
 
+## Configure SonarQube servers in jenkins
+
+#### Go to Manage Jenkins -> System -> SonarQube servers
+##
+![Sonarqube jenkins install setup](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/bb2ba97c-0e42-49a8-95e9-175dd31e568a)
+
+Modify build timestamp formatting
+##
+![Build Time Stamp](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/aa7e43bb-cf94-4c7b-bf34-10d872574325)
+
+
 
 
 
