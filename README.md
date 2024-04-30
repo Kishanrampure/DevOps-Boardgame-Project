@@ -187,7 +187,6 @@ exit
 ## AWS CLI And GCP installation (Optional) | If needed
  - [Setup GCP CLI](https://cloud.google.com/sdk/docs/install)
  - [Setup AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-```
 
 ## Setup Jenkins And SonarQube 
 
