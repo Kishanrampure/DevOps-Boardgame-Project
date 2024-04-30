@@ -15,7 +15,7 @@ pipeline {
         }
         stage('SCM Fetch') {
         steps{
-            git branch: 'sc-staging', url: 'https://github.com/Kishanrampure/DevOps-Petclinic-Project.git'
+            git branch: 'sc-staging', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
             }
         }
         stage('Maven Install'){
@@ -27,12 +27,12 @@ pipeline {
           steps {
                 sh 'chmod +x mvnw'
                 sh 'chmod +x ./mvnw'
-                sh 'docker build -t kishanrampure/petclinic:v${BUILD_TIMESTAMP} .'
+                sh 'docker build -t kishanrampure/boardgame:v${BUILD_TIMESTAMP} .'
             }
         }
         stage('Docker Image Test'){
         steps {
-                sh 'trivy image kishanrampure/petclinic:v${BUILD_TIMESTAMP}'
+                sh 'trivy image kishanrampure/boardgame:v${BUILD_TIMESTAMP}'
             }
         }
         stage('Trivy FS Check') {
@@ -44,7 +44,7 @@ pipeline {
         steps {
           withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
              sh 'docker login -u $USERNAME -p $PASSWORD'
-             sh 'docker push kishanrampure/petclinic:v${BUILD_TIMESTAMP}'
+             sh 'docker push kishanrampure/boardgame:v${BUILD_TIMESTAMP}'
           }
         }
       }
@@ -60,13 +60,13 @@ pipeline {
                     sh '''
                     git add .
                     git branch -M deployment
-		                git remote -v
+		    git remote -v
                     git status
-		                git commit -a -m ${commitmsg}
+		    git commit -a -m ${commitmsg}
                     git push -u origin deployment --force
                     '''
                   } 
-	           }
+	       }
             }
         }
     } 
