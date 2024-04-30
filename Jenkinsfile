@@ -13,12 +13,12 @@ pipeline {
             sh 'git init'
             }
         }
-        stage('SCM Fetch') {
+        stage('SCM Fetch From Main') {
         steps{
-            git branch: 'main', url: 'https://github.com/Kishanrampure/DevOps-Petclinic-Project.git'
+            git branch: 'main', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
             }
         }
-        stage('Build') {
+        stage('Maven Compile') {
         steps {
                 sh 'mvn clean compile'
             }
@@ -49,7 +49,7 @@ pipeline {
                 dependencyCheckPublisher pattern: '**/dependency-check-report.html'
             }
         }
-        stage('Trivy FS Check') {
+        stage('Trivy FS Check CI') {
         steps {
                 sh "trivy fs ."
             }
@@ -60,9 +60,9 @@ pipeline {
           }
         steps{
                 withSonarQubeEnv('sonarserver') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Petclinic \
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Boardgame \
                     -Dsonar.java.binaries=. \
-                    -Dsonar.projectKey=Petclinic '''
+                    -Dsonar.projectKey=Boardgame '''
 
                 }
             }
@@ -88,5 +88,62 @@ pipeline {
 	       }
             }
         }
+        stage('SCM Fetch From sc-staging') {
+        steps{
+            git branch: 'sc-staging', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
+            }
+        }
+        stage('Maven Install'){
+        steps{
+              sh "mvn clean install"
+             }
+        }
+         stage('Docker Build') {
+          steps {
+                sh 'chmod +x mvnw'
+                sh 'chmod +x ./mvnw'
+                sh 'docker build -t kishanrampure/boardgame:v${BUILD_TIMESTAMP} .'
+            }
+        }
+        stage('Docker Image Test'){
+        steps {
+                sh 'trivy image kishanrampure/boardgame:v${BUILD_TIMESTAMP}'
+            }
+        }
+        stage('Trivy FS Check CD') {
+        steps {
+                sh "trivy fs ."
+            }
+        }
+        stage('Push image to dockerhub') {
+        steps {
+          withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+             sh 'docker login -u $USERNAME -p $PASSWORD'
+             sh 'docker push kishanrampure/boardgame:v${BUILD_TIMESTAMP}'
+          }
+        }
+      }
+        stage('Git Push to deployment') {
+	  environment {
+                commitmsg = "'codeChangesSC'"
+            }
+        steps {
+	       script{
+                   withCredentials([
+                    gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default')
+                    ] ) {
+                    sh '''
+                    git add .
+                    git branch -M deployment
+		    git remote -v
+                    git status
+		    git commit -a -m ${commitmsg}
+                    git push -u origin deployment --force
+                    '''
+            }
+        }
+    } 
+}
+
     } 
 }
