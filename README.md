@@ -257,6 +257,11 @@ exit
 Modify build timestamp formatting
 ##
 ![Build Time Stamp](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/aa7e43bb-cf94-4c7b-bf34-10d872574325)
+#
+
+## Repository Configure in Jenkins Pipeline  
+![Jenkins repo setup](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/8cd48231-ae3c-422a-8a39-b7786eb68f5f)
+
 
 
 
