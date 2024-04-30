@@ -14,7 +14,7 @@ Understanding the Spring Petclinic application with a few diagrams
 - Install Git
 - Install Docker and Docker Compose
 - Sonarqube
-## #Installation instructions are below.
+## Installation instructions are below on ubuntu
 
 Install Prerequisites
 ```bash
