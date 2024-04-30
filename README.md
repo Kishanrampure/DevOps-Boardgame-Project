@@ -1,10 +1,10 @@
 
-# DevOps - Petclinic - Project
-Implementing a DevOps CI/CD pipeline for the Sample PetClinic Application in a production level environment.
+# DevOps - Boardgame - Project
+Implementing a DevOps CI/CD pipeline for the Sample Boardgame Application in a production level environment.
 
-Understanding the Spring Petclinic application with a few diagrams
+Understanding the Boardgame application with a diagram
 
-![image](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/87ec1469-3a06-4023-addc-139165de83b0)
+![Boardgame](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/a3b8ceaf-d9be-41db-93e5-bed5ce021630)
 
 
 ## Prerequisites
