@@ -6,6 +6,7 @@ Understanding the Spring Petclinic application with a few diagrams
 
 ![image](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/87ec1469-3a06-4023-addc-139165de83b0)
 
+
 ## Prerequisites
 - Install JKD 17
 - Install Jenkins
@@ -70,20 +71,19 @@ sudo apt install git-all -y
 ###################################################################
 #Trivy installation 
 ###################################################################
-sudo apt-get install wget apt-transport-https gnupg lsb-release
+sudo apt-get install wget apt-transport-https gnupg lsb-release -y
 
 wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
 
 echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
 sudo apt-get update
-sudo apt-get install trivy
+sudo apt-get install trivy -y
 
 ###################################################################
 #Sonarqube installation 
 ###################################################################
 # Install Postgresql 15
-sudo apt update
-sudo apt upgrade
+sudo apt upgrade -y
 
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 
@@ -104,6 +104,7 @@ ALTER USER sonar WITH ENCRYPTED password 'sonar';
 CREATE DATABASE sonarqube OWNER sonar;
 grant all privileges on DATABASE sonarqube to sonar;
 \q
+exit
 
 ###################################################################
 #Increase Limits
@@ -111,10 +112,13 @@ grant all privileges on DATABASE sonarqube to sonar;
 sudo vim /etc/security/limits.conf
 sonarqube   -   nofile   65536
 sonarqube   -   nproc    4096
+#Exit And Save
+
 ###################################################################
 #Paste the below values at the bottom of the file
 sudo vim /etc/sysctl.conf
 vm.max_map_count = 262144
+#Exit And Save
 
 ###################################################################
 #Reboot to set the new limits
@@ -132,12 +136,13 @@ sudo chown sonar:sonar /opt/sonarqube -R
 
 ###################################################################
 #Update Sonarqube properties with DB credentials
-#Find and replace the below values, you might need to add the 
+#Find and replace the below values, you might need to add the sonar.jdbc.url 
 sudo vim /opt/sonarqube/conf/sonar.properties
-sonar.jdbc.url
+
 sonar.jdbc.username=sonar
 sonar.jdbc.password=sonar
 sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
+#Exit And Save
 
 ###################################################################
 #Create service for Sonarqube
@@ -164,6 +169,7 @@ LimitNPROC=4096
 
 [Install]
 WantedBy=multi-user.target
+#Exit And Save
 
 ###################################################################
 #Start Sonarqube and Enable service
@@ -177,3 +183,75 @@ sudo tail -f /opt/sonarqube/logs/sonar.log
 http://<IP_ADDRESS>:9000
 exit
 ```
+
+## AWS CLI And GCP installation (Optional) | If needed
+ - [Setup GCP CLI](https://cloud.google.com/sdk/docs/install)
+ - [Setup AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+```
+
+## Setup Jenkins And SonarQube 
+
+ - [Setup Jenkins (DigitalOcean Link)](https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-22-04)
+
+ - [Setup SonarQube (DigitalOcean Link)](https://www.digitalocean.com/community/tutorials/how-to-ensure-code-quality-with-sonarqube-on-ubuntu-18-04)
+
+
+## Install Plugins on Jenkins
+
+- Eclipse Temurin installerVersion
+- Maven Integration
+- Pipeline Maven Integration
+- OWASP Dependency-Check
+- SonarQube Scanner
+- Build Timestamp
+- Git Push
+- Docker
+- Docker Commons
+- Docker Pipeline
+
+## If Necessary (Optional)
+- Kubernetes Client API
+- Kubernetes Credentials
+- Kubernetes
+- Kubernetes CLI
+- Google Kubernetes Engine
+- Google Cloud Platform SDK :: Auth
+- AWS Credentials
+- Amazon Web Services SDK :: All
+
+#
+# Setup credentials on jenkins
+
+### Generate tokens in SonarQube and GitHub, and then copy them.
+
+
+![Sonarqube token copy](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/57030d3a-d3fe-46a0-850b-93cc660734ee)
+
+##
+
+![Github Token Copy](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/0ac85c7f-6388-4c57-bd27-86f2285ec953)
+###
+#### Click on + Add credentials
+###
+
+![Jenkins Create Cred](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/a462880f-38fd-4163-abc7-607ee38aecf7)
+
+## 
+
+![Jenkins cred page](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/c9c67fc8-23ff-4387-9e56-ee82483d66ae)
+
+## Setup Jenkins Tools
+
+| Tool | Name | Versions ~  |
+| ----------------- | | ----------------- |------------------------------------------------------------------ |
+| JDK | jdk |Install from adoptium.net - 17 |
+| SonarQube Scanner installations | sonar-scanner |Install automatically - 5.0.1 |
+| Maven installations | M3 |Install from Apache - 3.9.6 |
+| Dependency-Check installations | OWAPS |Install from github.com - 9.1.0 |
+
+
+
+
+
+
+
