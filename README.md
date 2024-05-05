@@ -270,10 +270,6 @@ Modify build timestamp formatting
 
 # Deploy Application to ArgoCD (GCP || EKS) 
 
-
-# Deploy Application to ArgoCD (GCP || EKS) 
-
-
 # Steps
 - [x] Create a kubernetes cluster on GKE || EKS.
 - [x] Setup Connection to created GKE || EKS cluster in with your local machine or cloud shell.
