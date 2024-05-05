@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: nodecontainer
-          image: kishanrampure/boardgame:v30.04.24
+          image: kishanrampure/boardgame:v05.05.24
           ports:
             - containerPort: 8080
