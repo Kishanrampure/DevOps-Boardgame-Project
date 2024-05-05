@@ -184,7 +184,7 @@ http://<IP_ADDRESS>:9000
 exit
 ```
 
-## AWS CLI And GCP installation (Optional) | If needed
+## AWS CLI And GCP installation
  - [Setup GCP CLI](https://cloud.google.com/sdk/docs/install)
  - [Setup AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
@@ -260,7 +260,11 @@ Modify build timestamp formatting
 #
 
 ## Repository Configure in Jenkins Pipeline  
+> Create a Jenkins Pipeline Job
 ![Jenkins repo setup](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/71de4f05-99dc-4834-923a-0dbc4dcb6b11)
+###
+- Build the Jenkins Pipeline
+![Jenkins Full Pipeline](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/a6b9912b-d151-427d-87b7-d22764025f5a)
 
 ##
 
