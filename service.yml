@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: boardgame-load-service
+spec:
+  ports:
+    - port: 8080 
+      targetPort: 8080
+  selector:
+    type: backend
+    app: boardgame  
+  type: LoadBalancer
