@@ -13,12 +13,12 @@ pipeline {
             sh 'git init'
             }
         }
-        stage('SCM Fetch') {
+        stage('SCM Fetch From sc-staging') {
         steps{
-            git branch: 'main', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
+            git branch: 'sc-staging', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
             }
         }
-        stage('Build') {
+        stage('Maven Compile') {
         steps {
                 sh 'mvn clean compile'
             }
@@ -49,7 +49,7 @@ pipeline {
                 dependencyCheckPublisher pattern: '**/dependency-check-report.html'
             }
         }
-        stage('Trivy FS Check') {
+        stage('Trivy FS Check CI') {
         steps {
                 sh "trivy fs ."
             }
@@ -67,8 +67,8 @@ pipeline {
                 }
             }
         }
-        stage('Git Push to sc-staging') {
-	  environment {
+        stage('Git Push to deployment') {
+	    environment {
                 commitmsg = "'CodeChange'"
             }
         steps {
@@ -81,12 +81,12 @@ pipeline {
 		    git remote -v
                     git status
 		    git commit -a -m ${commitmsg}
-                    git branch -M sc-staging
-                    git push -u origin sc-staging --force
+                    git branch -M deployment
+                    git push -u origin deployment --force
                     '''
-                  } 
-	       }
-            }
-        }
-    } 
+                 }
+	          }
+          }
+      }
+    }
 }

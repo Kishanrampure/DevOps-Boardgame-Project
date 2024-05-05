@@ -13,9 +13,9 @@ pipeline {
             sh 'git init'
             }
         }
-        stage('SCM Fetch From Main') {
+        stage('SCM Fetch From sc-staging') {
         steps{
-            git branch: 'main', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
+            git branch: 'sc-staging', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
             }
         }
         stage('Maven Compile') {
@@ -67,8 +67,8 @@ pipeline {
                 }
             }
         }
-        stage('Git Push to sc-staging') {
-	  environment {
+        stage('Git Push to deployment') {
+	    environment {
                 commitmsg = "'CodeChange'"
             }
         steps {
@@ -81,16 +81,22 @@ pipeline {
 		    git remote -v
                     git status
 		    git commit -a -m ${commitmsg}
-                    git branch -M sc-staging
-                    git push -u origin sc-staging --force
+                    git branch -M deployment
+                    git push -u origin deployment --force
                     '''
-                  } 
-	       }
+                 }
+	          }
+          }
+      }
+
+        stage('Git Init') {
+        steps{
+            sh 'git init'
             }
         }
-        stage('SCM Fetch From sc-staging') {
+        stage('SCM Fetch') {
         steps{
-            git branch: 'sc-staging', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
+            git branch: 'deployment', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
             }
         }
         stage('Maven Install'){
@@ -102,28 +108,56 @@ pipeline {
           steps {
                 sh 'chmod +x mvnw'
                 sh 'chmod +x ./mvnw'
-                sh 'docker build -t kishanrampure/boardgame:v${BUILD_TIMESTAMP} .'
+                sh 'sudo chmod 777 /var/run/docker.sock'
+                sh 'docker build -t us-west1-docker.pkg.dev/<Project-ID>/boardgame/boardgame:latest .'
             }
         }
         stage('Docker Image Test'){
         steps {
-                sh 'trivy image kishanrampure/boardgame:v${BUILD_TIMESTAMP}'
+                sh 'trivy image us-west1-docker.pkg.dev/<Project-ID>/boardgame/boardgame:latest'
             }
         }
-        stage('Trivy FS Check CD') {
+        stage('Trivy FS Check') {
         steps {
                 sh "trivy fs ."
             }
         }
-        stage('Push image to dockerhub') {
+        stage('Authenticate to GCR') {
         steps {
-          withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-             sh 'docker login -u $USERNAME -p $PASSWORD'
-             sh 'docker push kishanrampure/boardgame:v${BUILD_TIMESTAMP}'
-          }
+                sh "sudo gcloud auth configure-docker us-west1-docker.pkg.dev"
+              }
+         }
+        stage('Push image to Artifact Registry') {
+        steps {
+             sh "sudo docker push us-west1-docker.pkg.dev/<Project-ID>/boardgame/boardgame:latest"
         }
       }
-        stage('Git Push to deployment') {
+      stage('Setup Connection GKE cluster') {
+      steps {
+              sh "gcloud container clusters get-credentials boardgame --zone us-west1-a --project <Project-ID>"
+          }
+      }
+      stage('Create Deployment') {
+      steps {
+             sh "kubectl apply -f deploy.yml"
+             }
+      }
+      stage('Status of Deployment') {
+      steps {
+             sh "kubectl get deploy"
+             }
+      }
+      stage('Create Load Balancer Service') {
+      steps {
+             sh "kubectl apply -f service.yml"
+             }
+      }
+      stage('Status of Service') {
+      steps {
+             sh "kubectl get svc"
+             }
+      }
+        stage('Git Push to GCP') {
 	  environment {
                 commitmsg = "'codeChangesSC'"
             }
@@ -134,16 +168,17 @@ pipeline {
                     ] ) {
                     sh '''
                     git add .
-                    git branch -M deployment
-		    git remote -v
+                    git branch -M GCP
+		            git remote -v
                     git status
-		    git commit -a -m ${commitmsg}
-                    git push -u origin deployment --force
+		            git commit -a -m ${commitmsg}
+                    git push -u origin GCP --force
                     '''
+                  }
+	           }
             }
         }
-    } 
+
+    }
 }
 
-    } 
-}

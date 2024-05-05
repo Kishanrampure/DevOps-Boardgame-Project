@@ -1,0 +1,101 @@
+pipeline {
+    agent any
+ tools {
+        maven 'M3'
+        jdk 'jdk'
+    }
+    options {
+        skipStagesAfterUnstable()
+    }
+    stages {
+        stage('Git Init') {
+        steps{
+            sh 'git init'
+            }
+        }
+        stage('SCM Fetch') {
+        steps{
+            git branch: 'deployment', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
+            }
+        }
+        stage('Maven Install'){
+        steps{
+              sh "mvn clean install"
+             }
+        }
+         stage('Docker Build') {
+          steps {
+                sh 'chmod +x mvnw'
+                sh 'chmod +x ./mvnw'
+                sh 'sudo chmod 777 /var/run/docker.sock'
+                sh 'docker build -t us-west1-docker.pkg.dev/<Project-ID>/boardgame/boardgame:latest .'
+            }
+        }
+        stage('Docker Image Test'){
+        steps {
+                sh 'trivy image us-west1-docker.pkg.dev/<Project-ID>/boardgame/boardgame:latest'
+            }
+        }
+        stage('Trivy FS Check') {
+        steps {
+                sh "trivy fs ."
+            }
+        }
+        stage('Authenticate to GCR') {
+        steps {
+                sh "sudo gcloud auth configure-docker us-west1-docker.pkg.dev"
+              }
+         }
+        stage('Push image to Artifact Registry') {
+        steps {
+             sh "sudo docker push us-west1-docker.pkg.dev/<Project-ID>/boardgame/boardgame:latest"
+        }
+      }
+      stage('Setup Connection GKE cluster') {
+      steps {
+              sh "gcloud container clusters get-credentials boardgame --zone us-west1-a --project <Project-ID>"
+          }
+      }
+      stage('Create Deployment') {
+      steps {
+             sh "kubectl apply -f deploy.yml"
+             }
+      }
+      stage('Status of Deployment') {
+      steps {
+             sh "kubectl get deploy"
+             }
+      }
+      stage('Create Load Balancer Service') {
+      steps {
+             sh "kubectl apply -f service.yml"
+             }
+      }
+      stage('Status of Service') {
+      steps {
+             sh "kubectl get svc"
+             }
+      }
+        stage('Git Push to GCP') {
+	  environment {
+                commitmsg = "'codeChangesSC'"
+            }
+        steps {
+	       script{
+                   withCredentials([
+                    gitUsernamePassword(credentialsId: 'mygitid', gitToolName: 'Default')
+                    ] ) {
+                    sh '''
+                    git add .
+                    git branch -M GCP
+		            git remote -v
+                    git status
+		            git commit -a -m ${commitmsg}
+                    git push -u origin GCP --force
+                    '''
+                  }
+	           }
+            }
+        }
+    }
+}
