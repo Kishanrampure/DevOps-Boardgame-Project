@@ -13,9 +13,9 @@ pipeline {
             sh 'git init'
             }
         }
-        stage('SCM Fetch From Main') {
+        stage('SCM Fetch From sc-staging') {
         steps{
-            git branch: 'main', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
+            git branch: 'sc-staging', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
             }
         }
         stage('Maven Compile') {
@@ -67,7 +67,7 @@ pipeline {
                 }
             }
         }
-        stage('Git Push to sc-staging') {
+        stage('Git Push to deployment') {
 	  environment {
                 commitmsg = "'CodeChange'"
             }
@@ -78,19 +78,19 @@ pipeline {
                     ] ) {
                     sh '''
                     git add .
-		    git remote -v
+		            git remote -v
                     git status
-		    git commit -a -m ${commitmsg}
-                    git branch -M sc-staging
-                    git push -u origin sc-staging --force
+		            git commit -a -m ${commitmsg}
+                    git branch -M deployment
+                    git push -u origin deployment --force
                     '''
                   } 
 	       }
             }
         }
-        stage('SCM Fetch From sc-staging') {
+        stage('SCM Fetch From deployment') {
         steps{
-            git branch: 'sc-staging', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
+            git branch: 'deployment', url: 'https://github.com/Kishanrampure/DevOps-Boardgame-Project.git'
             }
         }
         stage('Maven Install'){
@@ -123,7 +123,7 @@ pipeline {
           }
         }
       }
-        stage('Git Push to deployment') {
+        stage('Git Push to main') {
 	  environment {
                 commitmsg = "'codeChangesSC'"
             }
@@ -134,11 +134,11 @@ pipeline {
                     ] ) {
                     sh '''
                     git add .
-                    git branch -M deployment
+                    git branch -M main
 		            git remote -v
                     git status
 		            git commit -a -m ${commitmsg}
-                    git push -u origin deployment --force
+                    git push -u origin main --force
                     '''
             }
         }
