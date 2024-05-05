@@ -102,12 +102,12 @@ pipeline {
           steps {
                 sh 'chmod +x mvnw'
                 sh 'chmod +x ./mvnw'
-                sh 'docker build -f cicd/Dockerfile -t kishanrampure/boardgame:v${BUILD_TIMESTAMP} .'
+                sh 'docker build -f cicd/Dockerfile -t kishanrampure/boardgame:v06052024 .'
             }
         }
         stage('Docker Image Test'){
         steps {
-                sh 'trivy image kishanrampure/boardgame:v${BUILD_TIMESTAMP}'
+                sh 'trivy image kishanrampure/boardgame:v06052024'
             }
         }
         stage('Trivy FS Check CD') {
@@ -119,7 +119,7 @@ pipeline {
         steps {
           withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
              sh 'docker login -u $USERNAME -p $PASSWORD'
-             sh 'docker push kishanrampure/boardgame:v${BUILD_TIMESTAMP}'
+             sh 'docker push kishanrampure/boardgame:v06052024'
           }
         }
       }
@@ -135,9 +135,9 @@ pipeline {
                     sh '''
                     git add .
                     git branch -M deployment
-		    git remote -v
+		            git remote -v
                     git status
-		    git commit -a -m ${commitmsg}
+		            git commit -a -m ${commitmsg}
                     git push -u origin deployment --force
                     '''
             }
