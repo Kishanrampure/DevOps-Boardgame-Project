@@ -102,7 +102,7 @@ pipeline {
           steps {
                 sh 'chmod +x mvnw'
                 sh 'chmod +x ./mvnw'
-                sh 'docker build -t kishanrampure/boardgame:v${BUILD_TIMESTAMP} .'
+                sh 'docker build -f cicd/Dockerfile -t kishanrampure/boardgame:v${BUILD_TIMESTAMP} .'
             }
         }
         stage('Docker Image Test'){
