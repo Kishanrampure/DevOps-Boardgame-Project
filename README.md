@@ -260,8 +260,59 @@ Modify build timestamp formatting
 #
 
 ## Repository Configure in Jenkins Pipeline  
-![Jenkins repo setup](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/8cd48231-ae3c-422a-8a39-b7786eb68f5f)
+![Jenkins repo setup](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/71de4f05-99dc-4834-923a-0dbc4dcb6b11)
+
 ##
+
+# Deploy Application to ArgoCD (GCP || EKS) 
+
+
+# Steps
+- Create a kubernetes cluster on GKE || EKS.
+ - [Install Gcloud Cli - GCP LINK](https://cloud.google.com/sdk/docs/install#deb)
+ - [Install AWS Cli - AWS LINK](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- [x] Setup Connection to created GKE || EKS cluster in with your local machine or cloud shell.
+ - [Install kubectl and configure cluster access  - GCP LINK](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#apt)
+  - [Installing or updating kubectl  - AWS LINK](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html#:~:text=To%20install%20or%20update%20kubectl%20on%20Windows,Kubernetes%20version%20from%20Amazon%20S3.&text=amd64%2Fkubectl.exe-,(Optional)%20Verify%20the%20downloaded%20binary%20with%20the%20SHA%2D256,cluster's%20Kubernetes%20version%20for%20Windows.)
+  
+- [x] Install ArgoCD and Access.
+    ```sh
+    # install ArgoCD in k8s
+    kubectl create namespace argocd
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+    # access ArgoCD UI
+    kubectl get svc -n argocd
+    kubectl port-forward svc/argocd-server 8080:443 -n argocd
+
+    # login with admin user and below token (as in documentation):
+    kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
+    
+    # After successful login, ensure the application.yaml and Deploy, service file are in the same directory
+    kubectl apply -f application.yaml
+
+    ```
+
+- [x] Check status of the deployment.
+    ```sh
+    kubectl get deploy -n boardgame
+    ```
+- [x] Check status of service.
+    ```sh
+    kubectl get svc -n boardgame
+    ```
+- [x] Check the external IP of the service.
+
+### Cleanup
+```sh
+kubectl delete -f deploy.yml
+kubectl delete -f service.yml
+kubectl delete -f application.yml
+```
+
+> Delete your GKE || EKS Cluster from Console.
+
+
 
 
 
