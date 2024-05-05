@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: boardgame-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/Kishanrampure/DevOps-Boardgame-Project.git
+    targetRevision: HEAD
+    path: cicd
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: boardgame
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
