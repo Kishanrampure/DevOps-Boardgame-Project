@@ -31,5 +31,4 @@ build/
 
 ### Mic ###
 .vscode
-.mvn/
 .github/
