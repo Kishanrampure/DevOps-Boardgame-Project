@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: nodecontainer
-          image: us-west1-docker.pkg.dev/coherent-glow-420407/boardgame/boardgame:latest
+          image: kishanrampure/boardgame:v30.04.24
           ports:
             - containerPort: 8080
