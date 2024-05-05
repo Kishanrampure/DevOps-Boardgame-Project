@@ -32,4 +32,4 @@ build/
 ### Mic ###
 .vscode
 .mvn/
-.github/workflows
+.github/
