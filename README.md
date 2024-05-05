@@ -267,10 +267,11 @@ Modify build timestamp formatting
 # Deploy Application to ArgoCD (GCP || EKS) 
 
 
+# Deploy Application to ArgoCD (GCP || EKS) 
+
+
 # Steps
-- Create a kubernetes cluster on GKE || EKS.
- - [Install Gcloud Cli - GCP LINK](https://cloud.google.com/sdk/docs/install#deb)
- - [Install AWS Cli - AWS LINK](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- [x] Create a kubernetes cluster on GKE || EKS.
 - [x] Setup Connection to created GKE || EKS cluster in with your local machine or cloud shell.
  - [Install kubectl and configure cluster access  - GCP LINK](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#apt)
   - [Installing or updating kubectl  - AWS LINK](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html#:~:text=To%20install%20or%20update%20kubectl%20on%20Windows,Kubernetes%20version%20from%20Amazon%20S3.&text=amd64%2Fkubectl.exe-,(Optional)%20Verify%20the%20downloaded%20binary%20with%20the%20SHA%2D256,cluster's%20Kubernetes%20version%20for%20Windows.)
@@ -303,6 +304,9 @@ Modify build timestamp formatting
     ```
 - [x] Check the external IP of the service.
 
+- [x] Verify and test the deployed application for functionality.
+
+
 ### Cleanup
 ```sh
 kubectl delete -f deploy.yml
@@ -311,14 +315,3 @@ kubectl delete -f application.yml
 ```
 
 > Delete your GKE || EKS Cluster from Console.
-
-
-
-
-
-
-
-
-
-
-
