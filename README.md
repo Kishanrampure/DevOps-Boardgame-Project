@@ -1,10 +1,9 @@
 
 # DevOps - Boardgame - Project
+ - Project
 Implementing a DevOps CI/CD pipeline for the Sample Boardgame Application in a production level environment.
 
-Understanding the Boardgame application with a diagram
-
-![Boardgame](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/a3b8ceaf-d9be-41db-93e5-bed5ce021630)
+Understanding the Boardgame application with a few diagrams
 
 
 ## Prerequisites
@@ -182,12 +181,11 @@ sudo tail -f /opt/sonarqube/logs/sonar.log
 #Access the Sonarqube
 http://<IP_ADDRESS>:9000
 exit
-```
 
+```
 ## AWS CLI And GCP installation (Optional) | If needed
  - [Setup GCP CLI](https://cloud.google.com/sdk/docs/install)
  - [Setup AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-
 ## Setup Jenkins And SonarQube 
 
  - [Setup Jenkins (DigitalOcean Link)](https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-22-04)
@@ -218,6 +216,7 @@ exit
 - AWS Credentials
 - Amazon Web Services SDK :: All
 
+
 #
 # Setup credentials on jenkins
 
@@ -241,12 +240,12 @@ exit
 
 ## Setup Jenkins Tools
 
-| Tool | Name | Versions ~ |
-| ------------- | ------------- | ------------- |
-| JDK | jdk | Install from adoptium.net - 17 |
-| SonarQube Scanner installations | sonar-scanner | Install automatically - 5.0.1 |
-| Maven installations | M3 | Install from Apache - 3.9.6 |
-| Dependency-Check installations | OWAPS | Install from github.com - 9.1.0 |
+| Tool | Name | Versions ~  |
+| ----------------- | | ----------------- |------------------------------------------------------------------ |
+| JDK | jdk |Install from adoptium.net - 17 |
+| SonarQube Scanner installations | sonar-scanner |Install automatically - 5.0.1 |
+| Maven installations | M3 |Install from Apache - 3.9.6 |
+| Dependency-Check installations | OWAPS |Install from github.com - 9.1.0 |
 
 ## Configure SonarQube servers in jenkins
 
@@ -257,17 +256,72 @@ exit
 Modify build timestamp formatting
 ##
 ![Build Time Stamp](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/aa7e43bb-cf94-4c7b-bf34-10d872574325)
+
+
+
+
 #
-
-## Repository Configure in Jenkins Pipeline  
-![Jenkins repo setup](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/8cd48231-ae3c-422a-8a39-b7786eb68f5f)
-##
-
-
-
-
+## Repository Configure in Jenkins Pipeline
+> Create a Jenkins Pipeline Job  
+![Jenkins repo setup](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/71de4f05-99dc-4834-923a-0dbc4dcb6b11)
+###
+- Build the Jenkins Pipeline
+![Jenkins Full Pipeline](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/a6b9912b-d151-427d-87b7-d22764025f5a)
 
 
 
+# Deploy Application to ArgoCD (GCP || EKS) 
 
+
+# Steps
+- [x] Create a kubernetes cluster on GKE || EKS.
+- [x] Setup Connection to created GKE || EKS cluster in with your local machine or cloud shell.
+ - [Install kubectl and configure cluster access  - GCP LINK](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#apt)
+  - [Installing or updating kubectl  - AWS LINK](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html#:~:text=To%20install%20or%20update%20kubectl%20on%20Windows,Kubernetes%20version%20from%20Amazon%20S3.&text=amd64%2Fkubectl.exe-,(Optional)%20Verify%20the%20downloaded%20binary%20with%20the%20SHA%2D256,cluster's%20Kubernetes%20version%20for%20Windows.)
+  
+- [x] Install ArgoCD and Access.
+    ```sh
+    # install ArgoCD in k8s
+    kubectl create namespace argocd
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+    # access ArgoCD UI
+    kubectl get svc -n argocd
+    kubectl port-forward svc/argocd-server 8080:443 -n argocd
+
+    # login with admin user and below token (as in documentation):
+    kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
+
+    #Git Clone Repo
+    git clone git clone https://github.com/Kishanrampure/DevOps-Petclinic-Project.git
+
+    #Change Dir
+    cd cd DevOps-Petclinic-Project/cicd/
+    
+    # Ensure the application.yaml and Deploy, service file are in the same directory
+    kubectl apply -f application.yaml
+
+    ```
+
+- [x] Check status of the deployment.
+    ```sh
+    kubectl get deploy -n boardgame
+    ```
+- [x] Check status of service.
+    ```sh
+    kubectl get svc -n boardgame
+    ```
+- [x] Check the external IP of the service.
+
+- [x] Verify and test the deployed application for functionality.
+
+
+### Cleanup
+```sh
+kubectl delete -f deploy.yml
+kubectl delete -f service.yml
+kubectl delete -f application.yml
+```
+
+> Delete your GKE || EKS Cluster from Console.
 
