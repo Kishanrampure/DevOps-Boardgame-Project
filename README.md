@@ -4,6 +4,7 @@
 Implementing a DevOps CI/CD pipeline for the Sample Boardgame Application in a production level environment.
 
 Understanding the Boardgame application with a few diagrams
+![Boardgame](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/66cfd230-ea6f-4b2a-aa9d-b8145ea59c2c)
 
 
 ## Prerequisites
@@ -223,20 +224,24 @@ exit
 ### Generate tokens in SonarQube and GitHub, and then copy them.
 
 
-![Sonarqube token copy](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/57030d3a-d3fe-46a0-850b-93cc660734ee)
+![Sonarqube token copy](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/f1eb3e05-8535-466a-bf0b-64c3a3a07fef)
+
 
 ##
 
-![Github Token Copy](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/0ac85c7f-6388-4c57-bd27-86f2285ec953)
+![Github Token Copy](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/bb465b19-cff8-4917-8b16-46c44ead354e)
+
 ###
 #### Click on + Add credentials
 ###
 
-![Jenkins Create Cred](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/a462880f-38fd-4163-abc7-607ee38aecf7)
+![Jenkins Create Cred](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/d1040adb-4286-4b9e-8c56-ee738dc87f84)
+
 
 ## 
 
-![Jenkins cred page](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/c9c67fc8-23ff-4387-9e56-ee82483d66ae)
+![Jenkins cred page](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/548d2553-285d-42a4-a8ae-e5e6e428ea4e)
+
 
 ## Setup Jenkins Tools
 
@@ -251,13 +256,11 @@ exit
 
 #### Go to Manage Jenkins -> System -> SonarQube servers
 ##
-![Sonarqube jenkins install setup](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/bb2ba97c-0e42-49a8-95e9-175dd31e568a)
+![Sonarqube jenkins install setup](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/eeb10e0e-062f-4f06-a8df-370d1c9b5613)
 
 Modify build timestamp formatting
 ##
-![Build Time Stamp](https://github.com/Kishanrampure/DevOps-Petclinic-Project/assets/121344253/aa7e43bb-cf94-4c7b-bf34-10d872574325)
-
-
+![Build Time Stamp](https://github.com/Kishanrampure/DevOps-Boardgame-Project/assets/121344253/a9b321d1-d76a-4109-a6e2-c273361b1a55)
 
 
 #
