@@ -299,7 +299,7 @@ Modify build timestamp formatting
     git clone git clone https://github.com/Kishanrampure/DevOps-Petclinic-Project.git
 
     #Change Dir
-    cd cd DevOps-Petclinic-Project/cicd/
+    cd DevOps-Petclinic-Project/cicd/
     
     # Ensure the application.yaml and Deploy, service file are in the same directory
     kubectl apply -f application.yaml
