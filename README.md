@@ -268,14 +268,6 @@ Modify build timestamp formatting
 
 ##
 
-# Deploy Application to ArgoCD (GCP || EKS) 
-
-# Steps
-- [x] Create a kubernetes cluster on GKE || EKS.
-- [x] Setup Connection to created GKE || EKS cluster in with your local machine or cloud shell.
- - [Install kubectl and configure cluster access  - GCP LINK](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#apt)
-  - [Installing or updating kubectl  - AWS LINK](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html#:~:text=To%20install%20or%20update%20kubectl%20on%20Windows,Kubernetes%20version%20from%20Amazon%20S3.&text=amd64%2Fkubectl.exe-,(Optional)%20Verify%20the%20downloaded%20binary%20with%20the%20SHA%2D256,cluster's%20Kubernetes%20version%20for%20Windows.)
-  
 - [x] Install ArgoCD and Access.
     ```sh
     # install ArgoCD in k8s
@@ -288,30 +280,33 @@ Modify build timestamp formatting
 
     # login with admin user and below token (as in documentation):
     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
-    
-    # After successful login, ensure the application.yaml and Deploy, service file are in the same directory
-    kubectl apply -f application.yaml
 
+
+- [x] Authenticate to GCR || ECR
+- [x] Push docker image to GCR || ECR
+
+- [x] Apply manifest file to create deployment.
+    ```sh
+    kubectl apply -f deploy.yml
     ```
-
 - [x] Check status of the deployment.
     ```sh
-    kubectl get deploy -n boardgame
+    kubectl get deploy
+    ```
+- [x] Apply manifest file to create load balancer service.
+    ```sh
+    kubectl apply -f service.yml
     ```
 - [x] Check status of service.
     ```sh
-    kubectl get svc -n boardgame
+    kubectl get svc
     ```
-- [x] Check the external IP of the service.
-
-- [x] Verify and test the deployed application for functionality.
-
+- [x] Check the external IP of the service in the browser.
 
 ### Cleanup
 ```sh
 kubectl delete -f deploy.yml
 kubectl delete -f service.yml
-kubectl delete -f application.yml
 ```
-
 > Delete your GKE || EKS Cluster from Console.
+#
