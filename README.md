@@ -296,10 +296,10 @@ Modify build timestamp formatting
     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
 
     #Git Clone Repo
-    git clone git clone https://github.com/Kishanrampure/DevOps-Petclinic-Project.git
+    git clone git clone https://github.com/Kishanrampure/DevOps-Boardgame-Project.git
 
     #Change Dir
-    cd DevOps-Petclinic-Project/cicd/
+    cd DevOps-Boardgame-Project/cicd/
     
     # Ensure the application.yaml and Deploy, service file are in the same directory
     kubectl apply -f application.yaml
