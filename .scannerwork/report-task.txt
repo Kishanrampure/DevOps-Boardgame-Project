@@ -2,5 +2,5 @@ projectKey=Boardgame
 serverUrl=http://34.171.50.116:9000
 serverVersion=10.5.0.89998
 dashboardUrl=http://34.171.50.116:9000/dashboard?id=Boardgame
-ceTaskId=a5119528-649c-4cf0-9bed-bcaea305659e
-ceTaskUrl=http://34.171.50.116:9000/api/ce/task?id=a5119528-649c-4cf0-9bed-bcaea305659e
+ceTaskId=c7be6672-c79b-41d7-bf23-1da380b7a0d3
+ceTaskUrl=http://34.171.50.116:9000/api/ce/task?id=c7be6672-c79b-41d7-bf23-1da380b7a0d3
